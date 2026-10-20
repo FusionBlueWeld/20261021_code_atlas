@@ -1,0 +1,234 @@
+.inspector {
+  padding: 16px;
+  overflow: auto;
+  background: #fff;
+}
+.inspector-identity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.inspector-name {
+  font: 600 15px Consolas, monospace;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.inspector-path {
+  font: 12px/1.7 Consolas, monospace;
+  color: #6881a0;
+  overflow-wrap: anywhere;
+}
+.detail-tabs {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid var(--line);
+  margin: 15px 0;
+}
+.detail-tabs button {
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  padding: 8px 6px;
+  font-size: 13px;
+  color: #71829a;
+}
+.detail-tabs button.active {
+  border-color: #4c86d0;
+  color: #316fb8;
+}
+.detail-signature {
+  font: 13px/1.8 Consolas, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f7faff;
+  padding: 11px;
+  border: 1px solid #d6e1ee;
+  border-radius: 5px;
+  margin: 0 0 16px;
+  color: #2b405f;
+}
+.detail-kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #e7edf4;
+  padding: 8px 0;
+  color: #74869e;
+}
+.detail-kv strong {
+  font-weight: 400;
+  text-align: right;
+  color: #315f9b;
+  overflow-wrap: anywhere;
+}
+.parameter-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 16px 0;
+  font-size: 12px;
+  table-layout: fixed;
+}
+.parameter-table th {
+  font-weight: 400;
+  color: #71839b;
+  text-align: left;
+  padding: 8px 4px;
+  border-bottom: 1px solid #d6e0eb;
+}
+.parameter-table td {
+  padding: 9px 4px;
+  border-bottom: 1px solid #e6edf4;
+  font: 12px/1.6 Consolas, monospace;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.parameter-table td:first-child {
+  color: #9a6e2c;
+}
+.member-list {
+  margin: 16px 0;
+}
+.member-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 7px;
+  border: 1px solid #d6e0eb;
+  margin: 6px 0;
+  min-width: 0;
+}
+.member-button:hover {
+  background: #f3f7fc;
+}
+.member-name {
+  font: 12px Consolas, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.member-line {
+  font-size: 12px;
+  color: #8494a8;
+}
+.inspector-open {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  border: 1px solid #b8cde7;
+  color: #316fb8;
+  background: #f1f6fd;
+}
+.inspector-open:hover {
+  background: #e7f0fb;
+}
+.source-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #73859d;
+}
+.source-toolbar button {
+  font-size: 12px;
+  padding: 6px;
+}
+.source-code {
+  font: 13px/1.9 Consolas, monospace;
+  overflow: auto;
+  border: 1px solid #d6e0eb;
+  border-radius: 5px;
+  background: #f8fafc;
+  padding: 9px 0;
+  max-height: calc(100dvh - 285px);
+  tab-size: 4;
+  color: #2d4260;
+}
+.source-line {
+  display: flex;
+  min-width: max-content;
+  padding-right: 12px;
+}
+.source-line.highlight {
+  background: #e9f2ff;
+}
+.line-number {
+  width: 38px;
+  text-align: right;
+  padding-right: 10px;
+  color: #94a3b6;
+  user-select: none;
+  flex-shrink: 0;
+}
+.source-text {
+  white-space: pre;
+}
+.source-token-keyword {
+  color: #7957ad;
+}
+.source-token-string {
+  color: #a86f2a;
+}
+.source-token-comment {
+  color: #7d8da0;
+}
+.code-comments {
+  margin: 16px 0;
+  color: #72849b;
+  font-size: 13px;
+}
+.code-comments summary {
+  cursor: pointer;
+}
+.code-comments pre {
+  font: 13px/1.8 inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.empty-detail {
+  font-size: 13px;
+  color: #7a8ba1;
+}
+.edge-evidence {
+  margin: 14px 0;
+  padding: 10px;
+  border: 1px solid #d6e0eb;
+  border-radius: 5px;
+  background: #f8fafc;
+}
+.edge-evidence-title {
+  color: #a27429;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.evidence-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid #e3eaf2;
+  border-radius: 0;
+  padding: 8px 2px;
+  color: #435875;
+  font-size: 12px;
+  white-space: normal;
+}
+.evidence-button:last-child {
+  border-bottom: 0;
+}
+.evidence-kind {
+  color: #3979c7;
+}
+.evidence-path {
+  display: block;
+  color: #8495aa;
+  font: 11px Consolas, monospace;
+  margin-top: 3px;
+}
+@media (max-width: 880px) {
+  .source-code {
+    max-height: 450px;
+  }
+}

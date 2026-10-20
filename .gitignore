@@ -1,0 +1,34 @@
+# JavaScript dependencies and local package cache
+node_modules/
+.npm-cache/
+
+# Python bytecode, virtual environments, and tool caches
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime logs
+*.log
+
+# Generated UI captures and analyzer output can contain local paths or source data
+/artifacts/**
+!/artifacts/review-20260919/
+!/artifacts/review-20260919/*.py
+!/artifacts/review-20260919/*.cjs
+
+# Local credentials/configuration, never source fixtures
+.env
+.env.*
+!.env.example
+!.env.sample
+.aws/
+.DS_Store
+Thumbs.db
+Desktop.ini

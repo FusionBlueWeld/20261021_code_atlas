@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Code Atlas</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button id="toggle-sidebar" class="panel-toggle" aria-controls="sidebar" aria-expanded="true" aria-label="左サイドバーを隠す" title="左サイドバーを隠す"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path class="panel-icon-rail" d="M6 4h3v16H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/><path d="M9 4v16"/></svg></button>
+    <a class="brand" href="/">Code Atlas</a><span class="repo-name" id="repo-name"></span>
+    <div class="top-actions"><button id="export-button">JSON保存</button><button class="primary" id="open-button" aria-label="リポジトリを開く"><span class="full-label">リポジトリを開く</span><span class="compact-label">開く</span></button></div>
+    <button id="toggle-inspector" class="panel-toggle" aria-controls="inspector" aria-expanded="true" aria-label="右サイドバーを隠す" title="右サイドバーを隠す"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path class="panel-icon-rail" d="M15 4h3a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-3Z"/><path d="M15 4v16"/></svg></button>
+  </header>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar">
+      <div class="search-row"><input id="search" placeholder="ファイル・関数を検索" aria-label="ファイル・関数を検索" autocomplete="off"><button id="collapse-tree" aria-label="ツリーを折りたたむ" title="折りたたむ">⊟</button></div>
+      <nav id="file-tree" class="file-tree" aria-label="ファイル"></nav>
+    </aside>
+    <div id="resize-sidebar" class="panel-resizer" role="separator" tabindex="0" aria-label="左サイドバーの幅" aria-controls="sidebar" aria-orientation="vertical" aria-valuemin="160" aria-valuemax="720" aria-valuenow="220"></div>
+    <main class="workspace">
+      <div class="map-toolbar">
+        <div class="view-tabs" role="tablist" aria-label="表示"><button id="structure-tab" role="tab" aria-selected="true" class="active">構造＋関係</button><button id="relations-tab" role="tab" aria-selected="false">関係だけ</button></div>
+        <label class="scope-control">プロジェクト<select id="project-select" aria-label="プロジェクト"></select></label>
+        <label class="scope-control">モジュール<select id="module-select" aria-label="モジュール"></select></label>
+        <label class="check-control"><input id="include-tests" type="checkbox"> テスト</label>
+        <label class="check-control"><input id="show-comments" type="checkbox" checked> コメント</label>
+        <button id="reset-button" title="展開した枝をすべて閉じます">骨格に戻す</button><button id="back-button" class="hidden" aria-label="ひとつ上へ" title="ひとつ上へ">↑</button>
+        <div id="breadcrumbs" class="breadcrumbs"></div>
+      </div>
+      <div id="graph-viewport" class="graph-viewport" tabindex="0" aria-label="コード構造図">
+        <div id="graph-world" class="graph-world"><svg id="graph-edges" aria-hidden="true"></svg><div id="graph-nodes"></div><div id="graph-labels" aria-live="polite"></div></div>
+        <div id="layout-control" class="layout-control graph-overlay-control" aria-label="カードの間隔調整">
+          <div class="spacing-row"><label for="vertical-gap"><span>縦間隔</span><output id="vertical-gap-value" for="vertical-gap">168px</output></label><input id="vertical-gap" type="range" min="152" max="640" step="8" value="168" aria-label="オブジェクト間の縦間隔"></div>
+          <div class="spacing-row"><label for="horizontal-gap"><span>横間隔</span><output id="horizontal-gap-value" for="horizontal-gap">338px</output></label><input id="horizontal-gap" type="range" min="292" max="900" step="2" value="338" aria-label="オブジェクト間の横間隔"></div>
+        </div>
+        <div id="graph-empty" class="graph-empty hidden"></div>
+      </div>
+      <div class="map-footer">
+        <div class="legend" title="光は関係の始点から終点へ進みます"><span><i class="line-call"></i>呼出元 → 呼出先</span><span><i class="line-contains"></i>親 → 子</span><span><i class="line-inherits"></i>派生 → 継承元</span><span class="legend-hint">コメントは線上ホバーで表示</span></div>
+        <div id="pagination" class="pagination"></div>
+        <div class="zoom-controls"><button id="zoom-out" aria-label="縮小">−</button><span id="zoom-label">100%</span><button id="zoom-in" aria-label="拡大">＋</button><button id="fit-button" aria-label="全体を画面に収める" title="全体を画面に収める">⊡</button></div>
+      </div>
+      <details id="diagnostics" class="diagnostics hidden"><summary id="diagnostics-label"></summary><ul id="diagnostics-list"></ul></details>
+    </main>
+    <div id="resize-inspector" class="panel-resizer" role="separator" tabindex="0" aria-label="右サイドバーの幅" aria-controls="inspector" aria-orientation="vertical" aria-valuemin="160" aria-valuemax="720" aria-valuenow="340"></div>
+    <aside id="inspector" class="inspector" aria-label="定義・コード"></aside>
+  </div>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <div id="loading" class="loading hidden" role="status"><div class="spinner"></div><span>解析中…</span></div>
+  <dialog id="open-dialog">
+    <form id="open-form">
+      <div class="dialog-top"><button type="button" class="close-dialog" aria-label="閉じる">×</button></div>
+      <button type="button" id="folder-button" class="folder-button">フォルダを選択</button><input id="folder-input" type="file" webkitdirectory multiple hidden>
+      <label for="path-input">ローカルパス</label><input id="path-input" class="path-input" placeholder="C:\projects\repository" autocomplete="off">
+      <div id="open-error" class="inline-error" role="alert"></div>
+      <div class="dialog-actions"><button type="button" id="load-demo">デモ</button><button type="submit" id="analyze-button" class="primary">開く</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

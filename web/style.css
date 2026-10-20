@@ -1,0 +1,5 @@
+/* Feature styles; each file owns one area without theme override chains. */
+@import url('/styles/base.css');
+@import url('/styles/shell.css');
+@import url('/styles/graph.css');
+@import url('/styles/inspector.css');

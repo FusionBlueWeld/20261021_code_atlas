@@ -1,0 +1,313 @@
+/* The fixed card dimensions match CodeGraph.metrics. */
+.graph-viewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  min-height: 120px;
+  background-color: #f5f7fb;
+  background-image: radial-gradient(#dbe3ee .8px, transparent .8px);
+  background-size: 22px 22px;
+  cursor: grab;
+  touch-action: none;
+}
+.graph-viewport.dragging {
+  cursor: grabbing;
+}
+.graph-world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  transform-origin: 0 0;
+  isolation: isolate;
+}
+#graph-edges {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  z-index: 1;
+  pointer-events: none;
+}
+#graph-nodes {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+#graph-labels {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: visible;
+  z-index: 4;
+  pointer-events: none;
+}
+.graph-card {
+  position: absolute;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: 10px 12px;
+  display: grid;
+  grid-template-rows: 28px minmax(0, 1fr) 28px;
+  gap: 5px;
+  border: 1px solid #c8d4e2;
+  border-left: 4px solid #6596cf;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 4px 12px #4a648014;
+  cursor: pointer;
+}
+.graph-card.repository {
+  border-left-color: #8360b4;
+  background: #f1eafa;
+}
+.graph-card.folder {
+  border-left-color: #c6983d;
+  background: #fff7e6;
+}
+.graph-card.file {
+  border-left-color: #5089cb;
+  background: #eff6ff;
+}
+.graph-card.class, .graph-card.interface, .graph-card.type {
+  border-left-color: #9779c9;
+  background: #faf7ff;
+}
+.graph-card.function, .graph-card.method {
+  border-left-color: #4d9c89;
+  background: #f3fbf8;
+}
+.graph-card.parameter {
+  border-left-color: #ca9743;
+  background: #fffaf0;
+}
+.graph-card:hover {
+  border-top-color: #75a5df;
+  border-right-color: #75a5df;
+  border-bottom-color: #75a5df;
+}
+.graph-card.selected {
+  outline: 2px solid #4b8bd4;
+  outline-offset: 1px;
+  box-shadow: 0 5px 16px #4b8bd421;
+}
+.graph-card.expanded {
+  box-shadow: 0 3px 13px #4a648029;
+}
+.node-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #cedaeb80;
+  min-width: 0;
+}
+.node-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  font: 16px Consolas, monospace;
+  background: #e5f3ee;
+  color: #408e7b;
+}
+.node-icon.repository {
+  background: #e4d6f5;
+  color: #7853a7;
+}
+.node-icon.folder {
+  background: #f8e9c5;
+  color: #a37a26;
+}
+.node-icon.file {
+  background: #dcecff;
+  color: #4f85ca;
+}
+.node-icon.class, .node-icon.interface, .node-icon.type {
+  background: #eee5fa;
+  color: #8666be;
+}
+.node-icon.parameter {
+  background: #fff0d2;
+  color: #b9852e;
+}
+.node-name {
+  font: 600 13px Consolas, monospace;
+  color: #253853;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+.node-signature {
+  font: 12px/1.5 Consolas, monospace;
+  color: #5b6f8a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  align-content: center;
+  min-width: 0;
+  margin: 0;
+  padding: 3px 0;
+  border-bottom: 1px solid #cedaeb80;
+}
+.node-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  font-size: 11px;
+  color: #75869d;
+  min-width: 0;
+}
+.node-footer > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.node-open {
+  flex: 0 0 auto;
+  height: 26px;
+  border: 1px solid #b8cde7;
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: #316fb8;
+  background: #ffffffa8;
+  font-size: 11px;
+  line-height: 18px;
+}
+.node-open:hover {
+  background: #e6f0ff;
+}
+.node-open.is-open {
+  color: #6f7e91;
+  border-color: #b7c2cf;
+}
+.graph-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--muted);
+  pointer-events: none;
+}
+.edge-hit {
+  cursor: pointer;
+  pointer-events: stroke;
+}
+.graph-edge, .edge-pulse {
+  transition: opacity .15s;
+}
+.graph-edge.emphasized {
+  stroke-width: 2.6;
+}
+.graph-edge.dim, .edge-pulse.dim {
+  opacity: .22;
+}
+.edge-selected {
+  stroke: #d08a31 !important;
+}
+.edge-pulse {
+  pointer-events: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 5 95;
+  opacity: .72;
+  filter: drop-shadow(0 0 4px #6f9bd655);
+  animation: edge-pulse 2.2s linear infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+.edge-pulse.emphasized {
+  stroke-width: 5;
+  animation-duration: 1.7s;
+}
+@keyframes edge-pulse {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+.edge-floating-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: 300px;
+  padding: 5px 9px;
+  border: 1px solid #b9cbe0;
+  border-radius: 5px;
+  background: #fffffff7;
+  color: #4c607c;
+  box-shadow: 0 3px 12px #49617c2e;
+  font: 11px/1.35 "Segoe UI", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .14s ease, visibility .14s ease;
+}
+.edge-floating-label.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.edge-floating-label:hover {
+  border-color: #6f9bd6;
+  background: #fff;
+}
+.layout-control {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 14px;
+  z-index: 5;
+  display: grid;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid #c9d7e7;
+  border-radius: 7px;
+  background: #fffffff2;
+  box-shadow: 0 4px 14px #49617c24;
+  color: #617692;
+  font-size: 11px;
+  pointer-events: auto;
+}
+.layout-control, .layout-control * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+.layout-control { cursor: grab; }
+.spacing-row { display: flex; align-items: center; gap: 8px; }
+.layout-control label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.layout-control output {
+  min-width: 38px;
+  text-align: right;
+  color: #356fb6;
+  font: 11px Consolas, monospace;
+}
+.layout-control input[type=range] {
+  width: 112px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: #4c86d0;
+  cursor: pointer;
+}

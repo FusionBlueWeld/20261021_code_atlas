@@ -1,0 +1,11 @@
+{
+  "name": "code-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local source structure explorer",
+  "scripts": {
+    "test:js": "node --test tests/parser.test.cjs tests/graph-model.test.cjs",
+    "test:ui": "node tests/ui.smoke.cjs && node tests/ui-regressions.smoke.cjs && node tests/version-ui.smoke.cjs && node tests/layout-controls.smoke.cjs"
+  },
+  "dependencies": {"typescript": "^5.9.3"}
+}
